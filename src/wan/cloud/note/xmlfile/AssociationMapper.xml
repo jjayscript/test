@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="wan.cloud.note.DAO.UserDao">
+ 
+   <select id="finduser" parameterType="String" resultMap="userMapper">
+      select * from cn_user where cn_user_id=#{userid}
+   </select>
+   <resultMap type="wan.cloud.note.entity.User" id="userMapper">
+      <collection property="books" javaType="java.util.List" ofType="wan.cloud.note.entity.cn_notebook" 
+      select="findbooks" column="cn_user_id">
+      </collection>
+   </resultMap>
+   <select id="findbooks" parameterType="String" resultType="wan.cloud.note.entity.cn_notebook">
+     select * from cn_notebook where cn_user_id=#{userid}
+   </select>
+   
+   
+
+   <select id="finduserdemo" resultMap="usermapper1">
+      select * from cn_user user left outer join cn_notebook book on (user.cn_user_id=book.cn_user_id)
+   </select>
+   <resultMap type="wan.cloud.note.entity.User" id="usermapper1">
+      <id property="cn_user_id" column="cn_user_id"/>
+      <collection property="books" javaType="java.util.List" ofType="wan.cloud.note.entity.User"></collection>
+   </resultMap>
+   
+   
+   <select id="findallbook" resultMap="bookmap">
+       select * from cn_notebook book join cn_user user on (book.cn_user_id=user.cn_user_id)
+   </select>
+   <resultMap type="wan.cloud.note.entity.cn_notebook" id="bookmap">
+        <id property="cn_user_id" column="cn_user_id" />
+          <result property="cn_notebook_id " column="cn_notebook_id "/>
+          <result property="cn_notebook_type_id" column="cn_notebook_type_id"/>
+          <result property="cn_notebook_name" column="cn_notebook_name"/>
+          <result property="cn_notebook_desc" column="cn_notebook_desc"/>
+          <result property="cn_notebook_createtime" column="cn_notebook_createtime"/>
+        <association property="user" javaType="wan.cloud.note.entity.User">
+            <result property="cn_user_id " column="cn_user_id "/>
+            <result property="cn_user_name" column="cn_user_name"/>
+            <result property="cn_user_password" column="cn_user_password"/>  
+            <result property="cn_user_token" column="cn_user_token"/>
+            <result property="cn_user_desc" column="cn_user_desc"/>
+        </association>
+   </resultMap>
+   
+   
+   
+   
+   
+ </mapper>

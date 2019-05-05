@@ -1,0 +1,25 @@
+package wan.cloud.note.controller;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import wan.cloud.note.entity.noteresult;
+import wan.cloud.note.service.notebookService;
+
+@Controller
+@RequestMapping("/note")
+public class rename_bookController {
+
+	@Resource
+	private notebookService nService;
+	@RequestMapping("/rename.do")
+	@ResponseBody
+	public noteresult renameNoteBook(String notebookid,String notebookname){
+		noteresult result=new noteresult();
+		result=nService.rename_book(notebookid, notebookname);
+		return result;
+	}
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"      
+ "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+ <mapper namespace="wan.cloud.note.DAO.shareDAO">
+   <insert id="shareNote" parameterType="wan.cloud.note.entity.cn_share">
+   insert into cn_share (cn_share_id,cn_share_title,cn_share_body,cn_note_id) values
+   (   #{cn_share_id},
+        #{cn_share_title},
+         #{cn_share_body},
+          #{cn_note_id}
+   )   
+   </insert>
+   <select id="queryShare" parameterType="String" resultType="wan.cloud.note.entity.cn_share">
+      select * from cn_share where cn_share_id=#{cn_share_id}
+     
+   </select>
+   
+ </mapper>
